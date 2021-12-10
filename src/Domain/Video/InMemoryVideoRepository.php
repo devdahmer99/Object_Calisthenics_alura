@@ -3,6 +3,7 @@
 namespace Alura\Calisthenics\Domain\Video;
 
 use Alura\Calisthenics\Domain\Student\Student;
+use DateTimeImmutable;
 
 class InMemoryVideoRepository implements VideoRepository
 {
@@ -15,7 +16,6 @@ class InMemoryVideoRepository implements VideoRepository
 
     public function videosFor(Student $student): array
     {
-        $today = new \DateTimeImmutable();
-        return array_filter($this->videos, fn (Video $video) => $video->getAgeLimit() <= $student->getBd()->diff($today)->y);
+        return array_filter( $this->videos, fn (Video $video) => $video->getAgeLimit() <= $student->age());
     }
 }

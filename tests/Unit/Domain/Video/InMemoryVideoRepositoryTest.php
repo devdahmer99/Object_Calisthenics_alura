@@ -5,10 +5,14 @@ namespace Alura\Calisthenics\Tests\Unit\Domain\Video;
 use Alura\Calisthenics\Domain\Student\Student;
 use Alura\Calisthenics\Domain\Video\InMemoryVideoRepository;
 use Alura\Calisthenics\Domain\Video\Video;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 class InMemoryVideoRepositoryTest extends TestCase
 {
+    /**
+     * @throws \Exception
+     */
     public function testFindingVideosForAStudentMustFilterAgeLimit()
     {
         $repository = new InMemoryVideoRepository();
@@ -21,7 +25,7 @@ class InMemoryVideoRepositoryTest extends TestCase
         }
 
         $student = $this->createStub(Student::class);
-        $student->method('getBd')->willReturn(new \DateTimeImmutable('-19 years'));
+        $student->method('age')->willReturn(new DateTimeImmutable(19));
 
         $videoList = $repository->videosFor($student);
 
